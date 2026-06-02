@@ -1,0 +1,11 @@
+CC = gcc
+CFLAGS = -Wall -Wextra
+
+all:
+	$(CC) $(CFLAGS) main.c note.c -o note-cli
+
+run:
+	./note-cli
+
+clean:
+	rm -f note-cli
