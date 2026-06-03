@@ -5,5 +5,6 @@ int menu();
 void add_note();
 void show_notes();
 void quit();
+void delete_note();
 
 #endif

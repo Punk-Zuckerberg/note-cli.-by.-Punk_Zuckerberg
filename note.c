@@ -12,7 +12,8 @@ int menu(){
     fputs("note-CLI. v0.1\n", stdout);
     fputs("1. add note\n", stdout);
     fputs("2. show notes\n", stdout);
-    fputs("3. quit\n", stdout);
+    fputs("3. delete note\n", stdout);
+    fputs("4. quit\n", stdout);
     fputs("choose action: ", stdout);
     fgets(choose, 5, stdin);
 
@@ -44,6 +45,38 @@ void show_notes(){
             printf("\n");
                 count_notes++;
         }   
+
+    fclose(note);
+}
+
+void delete_note(){
+    int count_notes = 0;
+    char delete_choise[10];
+
+    printf("\n");
+    note = fopen("note.txt", "r");
+        while (fgets(text[count], 100, note) != NULL) {
+            printf("%d. %s", count_notes + 1, text[count]);
+            printf("\n");
+                count_notes++;
+        }
+    printf("\n");
+
+    fclose(note);
+
+    fputs("Select the number of the note you want to delete: ", stdout);
+    fgets(delete_choise, 100, stdin);
+    int atoi_delete = atoi(delete_choise) - 1;
+
+    for(int i = atoi_delete; i < count_notes; i++){
+        strcpy(text[i], text[i + 1]);
+    }
+    count--;
+
+    note = fopen("note.txt", "w");
+        for(int i = 0; i < count; i++){
+            fprintf(note, "%s", text[i]);
+        }
 
     fclose(note);
 }
