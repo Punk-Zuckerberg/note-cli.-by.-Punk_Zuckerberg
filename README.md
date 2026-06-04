@@ -17,4 +17,5 @@ bash make run
 - Add notes
 - View notes
 - Delete notes
+- Status notes
 - Persistent storage in note.txt
