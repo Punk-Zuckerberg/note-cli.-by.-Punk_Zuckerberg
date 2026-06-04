@@ -20,6 +20,9 @@ int main(int argc, char *argv[]){
         if (strcmp(argv[1], "quit") == 0) {
             quit();
         }
+        if (strcmp(argv[1], "status") == 0) {
+            status_note();
+        }
 }
     else {
 
@@ -36,6 +39,9 @@ int main(int argc, char *argv[]){
             delete_note();
         }    
         if (choise == 4) {
+            status_note();
+        }
+        if (choise == 5) {
             quit();
         }
     }

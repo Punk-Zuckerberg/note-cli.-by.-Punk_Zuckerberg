@@ -3,17 +3,18 @@
 #include <stdio.h>
 #include <string.h>
 
-FILE *note;
+FILE *note; //файл с заметками
 char choose[10]; //теперь это choise т.к. atoi
-char text[10][100];
-int count = 0;
+char text[100][256]; //позже переделать в malloc & free
+int count = 0;  //счетчик заметок
 
 int menu(){
-    fputs("note-CLI. v0.1\n", stdout);
+    fputs("note-CLI. v0.3\n", stdout);
     fputs("1. add note\n", stdout);
     fputs("2. show notes\n", stdout);
     fputs("3. delete note\n", stdout);
-    fputs("4. quit\n", stdout);
+    fputs("4. status\n", stdout);
+    fputs("5. quit\n", stdout);
     fputs("choose action: ", stdout);
     fgets(choose, 5, stdin);
 
@@ -79,6 +80,25 @@ void delete_note(){
         }
 
     fclose(note);
+}
+
+void status_note(){     //v0.1
+    int count_spaces = 0;
+    int count_symbols = 0;
+
+    fputs("Status of notes:\n", stdout);
+    for(int i = 0; i < count; i++){
+        count_symbols += strlen(text[i]);
+        for(int c = 0; c < strlen(text[i]); c++){
+
+            if (text[i][c] == ' ') {
+                count_spaces++;
+            }
+        }
+    }
+    printf("notes: %d", count);
+    printf("words: %d", count_spaces + 1);    //or spaces
+    printf("symbols: %d", count_symbols);
 }
 
 void quit(){

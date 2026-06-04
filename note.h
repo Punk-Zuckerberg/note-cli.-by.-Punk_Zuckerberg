@@ -6,5 +6,6 @@ void add_note();
 void show_notes();
 void quit();
 void delete_note();
+void status_note();
 
 #endif
