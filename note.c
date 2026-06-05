@@ -4,13 +4,16 @@
 #include <stdio.h>
 #include <string.h>
 
-FILE *note; //файл с заметками
+#define VERSION "v0.3"
+#define INVALID_INPUT "invalid input"
+
+FILE *note; //сам файл с заметками
 char choose[10]; //теперь это choise т.к. atoi
 char text[100][256]; //позже переделать в malloc & free
 int count = 0;  //счетчик заметок
 
 int menu(){
-    fputs("note-CLI. v0.3\n", stdout);
+    fputs("note-CLI. "VERSION"\n", stdout);
     fputs("1. add note\n", stdout);
     fputs("2. show notes\n", stdout);
     fputs("3. delete note\n", stdout);
@@ -42,6 +45,12 @@ void show_notes(){
 
     note = fopen("note.txt", "r");
 
+
+    if (note == NULL) {
+        fputs("No notes found.\n", stdout);
+            return;
+}
+
         while (fgets(text[count], 100, note) != NULL) {
             printf("%d. %s", count_notes + 1, text[count]);
             printf("\n");
@@ -55,7 +64,6 @@ void delete_note(){
     int valid = 0;
     int count_notes = 0;
     char delete_choise[10];
-    int atoi_delete;
 
     printf("\n");
     note = fopen("note.txt", "r");
@@ -70,22 +78,7 @@ void delete_note(){
 
     fputs("Select the number of the note you want to delete: ", stdout);
     fgets(delete_choise, 100, stdin);
-
-    for(int i = 0; i < 10; i++){        //Checking the symbol for a number
-        while (valid != 1) {
-            if (isdigit(delete_choise[i])) {
-                atoi_delete = atoi(delete_choise) - 1;    
-                if (atoi_delete < 1 || atoi_delete > count_notes) {
-                    printf("\nInvalid input\n\n");
-                    fputs("Select the number of the note you want to delete: ", stdout);
-                    fgets(delete_choise, 100, stdin);
-
-                        valid++;
-                }
-            }
-        }
-    }
-
+    int atoi_delete = atoi(delete_choise) - 1;
 
     for(int i = atoi_delete; i < count_notes; i++){
         strcpy(text[i], text[i + 1]);
