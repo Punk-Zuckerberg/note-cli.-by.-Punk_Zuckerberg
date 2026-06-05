@@ -1,15 +1,19 @@
 #include "note.h"
+#include <ctype.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
-FILE *note; //файл с заметками
+#define VERSION "v0.3"
+#define INVALID_INPUT "invalid input"
+
+FILE *note; //сам файл с заметками
 char choose[10]; //теперь это choise т.к. atoi
 char text[100][256]; //позже переделать в malloc & free
 int count = 0;  //счетчик заметок
 
 int menu(){
-    fputs("note-CLI. v0.3\n", stdout);
+    fputs("note-CLI. "VERSION"\n", stdout);
     fputs("1. add note\n", stdout);
     fputs("2. show notes\n", stdout);
     fputs("3. delete note\n", stdout);
@@ -41,6 +45,12 @@ void show_notes(){
 
     note = fopen("note.txt", "r");
 
+
+    if (note == NULL) {
+        fputs("No notes found.\n", stdout);
+            return;
+}
+
         while (fgets(text[count], 100, note) != NULL) {
             printf("%d. %s", count_notes + 1, text[count]);
             printf("\n");
@@ -53,7 +63,8 @@ void show_notes(){
 void delete_note(){
     int count_notes = 0;
     char delete_choise[10];
-
+    int valid = 0;
+    int atoi_delete;
     printf("\n");
     note = fopen("note.txt", "r");
         while (fgets(text[count], 100, note) != NULL) {
@@ -65,9 +76,20 @@ void delete_note(){
 
     fclose(note);
 
-    fputs("Select the number of the note you want to delete: ", stdout);
-    fgets(delete_choise, 100, stdin);
-    int atoi_delete = atoi(delete_choise) - 1;
+    while (1) {
+
+        fputs("Select note: ", stdout);
+        fgets(delete_choise, sizeof(delete_choise), stdin);
+
+        atoi_delete = atoi(delete_choise) - 1;
+
+        if (atoi_delete >= 0 && atoi_delete < count_notes) {
+            break;
+        }
+
+        fputs(INVALID_INPUT"\n", stderr);
+    }
+    atoi_delete = atoi(delete_choise) - 1;
 
     for(int i = atoi_delete; i < count_notes; i++){
         strcpy(text[i], text[i + 1]);
@@ -96,9 +118,9 @@ void status_note(){     //v0.1
             }
         }
     }
-    printf("notes: %d", count);
-    printf("words: %d", count_spaces + 1);    //or spaces
-    printf("symbols: %d", count_symbols);
+    printf("notes: %d\n", count);
+    printf("words: %d\n", count_spaces + 1);    //or spaces
+    printf("symbols: %d\n", count_symbols);
 }
 
 void quit(){
