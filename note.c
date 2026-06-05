@@ -64,6 +64,7 @@ void delete_note(){
     int valid = 0;
     int count_notes = 0;
     char delete_choise[10];
+    int atoi_delete;
 
     printf("\n");
     note = fopen("note.txt", "r");
@@ -78,7 +79,21 @@ void delete_note(){
 
     fputs("Select the number of the note you want to delete: ", stdout);
     fgets(delete_choise, 100, stdin);
-    int atoi_delete = atoi(delete_choise) - 1;
+
+    while (1) {
+
+    fputs("Select note. try again: ", stdout);
+    fgets(delete_choise, sizeof(delete_choise), stdin);
+
+    atoi_delete = atoi(delete_choise) - 1;
+
+    if (atoi_delete >= 0 && atoi_delete < count_notes) {
+        break;
+    }
+
+    fputs("Invalid input\n", stderr);
+}
+    atoi_delete = atoi(delete_choise) - 1;
 
     for(int i = atoi_delete; i < count_notes; i++){
         strcpy(text[i], text[i + 1]);
