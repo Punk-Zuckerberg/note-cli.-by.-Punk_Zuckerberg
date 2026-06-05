@@ -1,4 +1,5 @@
 #include "note.h"
+#include <ctype.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -51,8 +52,10 @@ void show_notes(){
 }
 
 void delete_note(){
+    int valid = 0;
     int count_notes = 0;
     char delete_choise[10];
+    int atoi_delete;
 
     printf("\n");
     note = fopen("note.txt", "r");
@@ -67,7 +70,22 @@ void delete_note(){
 
     fputs("Select the number of the note you want to delete: ", stdout);
     fgets(delete_choise, 100, stdin);
-    int atoi_delete = atoi(delete_choise) - 1;
+
+    for(int i = 0; i < 10; i++){        //Checking the symbol for a number
+        while (valid != 1) {
+            if (isdigit(delete_choise[i])) {
+                atoi_delete = atoi(delete_choise) - 1;    
+                if (atoi_delete < 1 || atoi_delete > count_notes) {
+                    printf("\nInvalid input\n\n");
+                    fputs("Select the number of the note you want to delete: ", stdout);
+                    fgets(delete_choise, 100, stdin);
+
+                        valid++;
+                }
+            }
+        }
+    }
+
 
     for(int i = atoi_delete; i < count_notes; i++){
         strcpy(text[i], text[i + 1]);
@@ -78,6 +96,7 @@ void delete_note(){
         for(int i = 0; i < count; i++){
             fprintf(note, "%s", text[i]);
         }
+    printf("note deleted...\n");
 
     fclose(note);
 }
@@ -89,16 +108,16 @@ void status_note(){     //v0.1
     fputs("Status of notes:\n", stdout);
     for(int i = 0; i < count; i++){
         count_symbols += strlen(text[i]);
-        for(int c = 0; c < strlen(text[i]); c++){
+        for(size_t c = 0; c < strlen(text[i]); c++){
 
             if (text[i][c] == ' ') {
                 count_spaces++;
             }
         }
     }
-    printf("notes: %d", count);
-    printf("words: %d", count_spaces + 1);    //or spaces
-    printf("symbols: %d", count_symbols);
+    printf("notes: %d\n", count);
+    printf("words: %d\n", count_spaces + 1);    //or spaces
+    printf("symbols: %d\n", count_symbols);
 }
 
 void quit(){
