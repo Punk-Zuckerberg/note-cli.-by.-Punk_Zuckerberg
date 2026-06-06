@@ -1,8 +1,8 @@
 CC = gcc
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -Iinclude
 
 all:
-	$(CC) $(CFLAGS) main.c note.c -o note-cli
+	$(CC) $(CFLAGS) src/main.c src/note.c -o note-cli
 
 run:
 	./note-cli

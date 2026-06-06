@@ -1,4 +1,6 @@
 My first project is written in C. it is a client of notes. quite simple functionality. in it you can add notes, view the added notes and their number.
+Licensed under GPLv2.
+See LICENSE file for details.
 
 # Note CLI
 

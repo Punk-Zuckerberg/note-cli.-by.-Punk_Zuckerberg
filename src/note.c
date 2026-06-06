@@ -1,5 +1,4 @@
-#include "note.h"
-#include <ctype.h>
+#include "../include/note.h"#include <ctype.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -30,7 +29,7 @@ int menu(){
 
 void add_note(){
     note = fopen("note.txt", "a");
-    fputs("Enter note: ", stdout);
+    fputs("enter note: ", stdout);
     fgets(text[count], 100, stdin);
     fprintf(note, "%s", text[count]);
         count++;
@@ -41,13 +40,13 @@ void add_note(){
 void show_notes(){
     int count_notes = 0;
     printf("\n");
-    fputs("Your notes: \n", stdout);
+    fputs("your notes: \n", stdout);
 
     note = fopen("note.txt", "r");
 
 
     if (note == NULL) {
-        fputs("No notes found.\n", stdout);
+        fputs("no notes found.\n", stdout);
             return;
 }
 
@@ -61,7 +60,6 @@ void show_notes(){
 }
 
 void delete_note(){
-    int valid = 0;
     int count_notes = 0;
     char delete_choise[10];
     int atoi_delete;
@@ -77,12 +75,12 @@ void delete_note(){
 
     fclose(note);
 
-    fputs("Select the number of the note you want to delete: ", stdout);
+    fputs("select the number of the note you want to delete: ", stdout);
     fgets(delete_choise, 100, stdin);
 
     while (1) {
 
-    fputs("Select note. try again: ", stdout);
+    fputs("select note. try again: ", stdout);
     fgets(delete_choise, sizeof(delete_choise), stdin);
 
     atoi_delete = atoi(delete_choise) - 1;
@@ -91,7 +89,7 @@ void delete_note(){
         break;
     }
 
-    fputs("Invalid input\n", stderr);
+    fputs(INVALID_INPUT"\n", stderr);
 }
     atoi_delete = atoi(delete_choise) - 1;
 
@@ -113,7 +111,7 @@ void status_note(){     //v0.1
     int count_spaces = 0;
     int count_symbols = 0;
 
-    fputs("Status of notes:\n", stdout);
+    fputs("status of notes:\n", stdout);
     for(int i = 0; i < count; i++){
         count_symbols += strlen(text[i]);
         for(size_t c = 0; c < strlen(text[i]); c++){

@@ -1,0 +1,8 @@
+# binary
+note-cli
+
+# macOS debug files
+*.dSYM
+
+# user notes
+note.txt

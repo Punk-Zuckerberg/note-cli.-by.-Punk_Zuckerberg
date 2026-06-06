@@ -1,8 +1,8 @@
-#include "note.h"
+#include "../include/note.h"
 #include <string.h>
 #include <stdlib.h>
 
-enum{
+enum Commands{
     ADD_NOTE = 1,
     SHOW_NOTES = 2,
     DELETE_NOTE = 3,
